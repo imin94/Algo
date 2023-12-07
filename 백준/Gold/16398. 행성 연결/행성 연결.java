@@ -76,7 +76,7 @@ public class Main {
 			}
 		}
 		
-		return cost;
+		return 0;
 	}
 
 }
