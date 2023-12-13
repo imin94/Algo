@@ -1,90 +1,94 @@
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.PriorityQueue;
-import java.util.Queue;
 import java.util.StringTokenizer;
 
-class node1647 implements Comparable<node1647>{
-	
-	int node;
-	int weight;
-	
-	public node1647(int node, int weight) {
-		this.node=node;
-		this.weight=weight;
-	}
-	
-	@Override
-	public int compareTo(node1647 o) {
-		return this.weight-o.weight;
-	}
-	
-}
+class node implements Comparable<node> {
+   int st, end, w;
+
+   public node(int st, int end, int w) {
+      this.st = st;
+      this.end = end;
+      this.w = w;
+   }
+
+   @Override
+   public int compareTo(node o) {
+      return this.w - o.w;
+   }
+}// city
 
 public class Main {
-	
-	public static int sum;
-	public static int max;
-	public static boolean[] flag;
-	public static List<node1647>[] graph;
+   //길 유지비용 최소로 하기
+   //두 집 사이에 경로 항상 존재해야한다
+   //제일 큰 가중치 빼면 유지비 최소
+   //priorityqueue 사용해주기
+   static int n, m, max;
+   static int[] parent;
 
-	public static void main(String[] args) throws IOException {
-		
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		
-		int n = Integer.parseInt(st.nextToken());
-		int m = Integer.parseInt(st.nextToken());
-		
-		sum = 0;
-		max = 0;
-		flag = new boolean[n+1];
-		graph = new ArrayList[n+1];
-		
-		for(int i = 1; i<=n; i++) {
-			graph[i] = new ArrayList<>();
-		}
-		
-		for(int i = 0; i<m; i++) {
-			st = new StringTokenizer(br.readLine());
-			
-			int a = Integer.parseInt(st.nextToken());
-			int b = Integer.parseInt(st.nextToken());
-			int c = Integer.parseInt(st.nextToken());
-			
-			graph[a].add(new node1647(b,c));
-			graph[b].add(new node1647(a,c));
-			
-		}
-		prim();
-		bw.write(String.valueOf(sum-max));
-		br.close();
-		bw.close();
-		
-	}
-	
-	public static void prim() {
-		Queue<node1647> que = new PriorityQueue<>();
-		que.add(new node1647(1,0));
-		
-		while(!que.isEmpty()) {
-			node1647 node = que.poll();
-			int n = node.node;
-			int w = node.weight;
-			
-			if(flag[n])
-				continue;
-			flag[n] = true;
-			sum+=w;
-			max = Math.max(max, w);
-			for(node1647 i : graph[n]) {
-				if(flag[i.node])
-					continue;
-				que.add(i);
-			}
-		}
-	}
+   public static void main(String[] args) throws IOException {
+      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+      StringTokenizer st = new StringTokenizer(br.readLine());
 
-}
+      n = Integer.parseInt(st.nextToken());//집의 개수
+      m = Integer.parseInt(st.nextToken());//길의 개수
+
+      parent = new int[n + 1];
+      // 베열 초기화
+      for (int i = 1; i <= n; i++) {
+         parent[i] = i;
+      }
+
+      PriorityQueue<node> que = new PriorityQueue<node>();
+
+      //연결된 집에 관한 정보들 받아와서 que에 넣는다
+      for (int i = 0; i < m; i++) {
+         st = new StringTokenizer(br.readLine());
+         int a = Integer.parseInt(st.nextToken());//시작집
+         int b = Integer.parseInt(st.nextToken());//연결된 집
+         int cost = Integer.parseInt(st.nextToken());//유지비
+
+         que.add(new node(a, b, cost));
+      }
+      
+      int res = 0;
+      int cnt = 0;
+      
+      //que 빌때까지 진행
+      int max = 0;
+      while(!que.isEmpty()) {
+         node curr = que.poll();//일단 뽑고
+         if(union(curr.st,curr.end)) {
+            cnt++;//간선수 카운팅 해준다
+            res += curr.w;//가중치(비용) 더해준다
+            max = Math.max(max,curr.w);
+         }
+         if(cnt == n-1) break; //가중치 가장 큰 간선을 빼면 되는거니까 간선 n-2되면 그만두기
+      }
+      System.out.println(res-max);
+   }// main
+
+   // 찾아요
+   static int find(int a) {
+      if (parent[a] == a)
+         return a;
+      else {
+         return parent[a] = find(parent[a]);
+      }
+   }// find
+
+   static boolean union(int a, int b) {
+      a = find(a);
+      b = find(b);
+
+      if (a == b)
+         return false;
+      else {
+         
+         parent[a] = b;
+         return true;
+      }
+   }// union
+
+}// class
