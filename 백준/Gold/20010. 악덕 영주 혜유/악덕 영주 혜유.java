@@ -95,8 +95,10 @@ public class Main {
 	
 	//MST 비용과 인접리스트 구하기
 	public static long kruskal() {
-		//비용 
+		//MST 비용 
 		long cost = 0;
+		//연결된 노드의 개수를 count해 n-1개와 동일해지면 break로 최적화
+		int cnt = 0;
 		while(!pq.isEmpty()) {
 			Node20010 now = pq.poll();
 			int from = now.from;
@@ -112,6 +114,8 @@ public class Main {
 			//MST 인접리스트 생성
 			list[from].add(new Node20010(to,w));
 			list[to].add(new Node20010(from,w));
+			if(++cnt == n-1)
+				break;
 		}
 		
 		return cost;
