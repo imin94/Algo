@@ -68,7 +68,7 @@ public class Main {
 		while(!pq.isEmpty()) {
 			int[] now = pq.poll();
 			int from = now[0];
-			//이미 방문한 누적값이 도착지의 누적값보다 크다면 
+			//이미 방문한 누적값이 현재 누적값보다 크다면 
 			if(cost[from]<now[1])
 				continue;
 			//만약 목적지에 도착한 경우 누적된 cost 반환
