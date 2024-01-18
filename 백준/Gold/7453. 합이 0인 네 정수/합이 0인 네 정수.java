@@ -38,9 +38,11 @@ public class Main {
 		//이때 배열의 크기는 최대 4000*4000 = 16000000
 		int idx = 0;
 		for(int i = 0; i<n; i++) {
+			int l1 = A[i];
+			int r1 = B[i];
 			for(int j = 0; j<n; j++) {
-				left[idx] = A[i]+C[j];
-				right[idx] = B[i]+D[j];
+				left[idx] = l1+C[j];
+				right[idx] = r1+D[j];
 				idx++;
 			}
 		}
@@ -55,8 +57,8 @@ public class Main {
 		int e = size-1;
 		long cnt = 0;
 		while(s<size && e>=0) {
-			int sValue = left[s];
-			int eValue = right[e];
+			long sValue = left[s];
+			long eValue = right[e];
 			
 			//합이 0인 경우 같은 수의 개수만큼 카운트 한 후 곱한 값을 더함
 			if(sValue + eValue == 0) {
