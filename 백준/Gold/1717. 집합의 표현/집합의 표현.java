@@ -19,13 +19,18 @@ public class Main {
 		for(int i = 1; i<=n; i++)
 			parents[i] = i;
 		
+		int a = 0;
+		int b = 0;
+		int c = 0;
+		int B = 0;
+		int C = 0;
 		for(int i = 0; i<m; i++) {
 			st = new StringTokenizer(br.readLine());
-			int a = Integer.parseInt(st.nextToken());
-			int b = Integer.parseInt(st.nextToken());
-			int c = Integer.parseInt(st.nextToken());
-			int B = find(b);
-			int C = find(c);
+			a = Integer.parseInt(st.nextToken());
+			b = Integer.parseInt(st.nextToken());
+			c = Integer.parseInt(st.nextToken());
+			B = find(b);
+			C = find(c);
 			if(a==0) {
 				if(B==C)
 					continue;
