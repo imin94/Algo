@@ -21,7 +21,7 @@ public class Main {
             list.add(Integer.parseInt(br.readLine()));
 
         int l = 1;
-        int r = Integer.MAX_VALUE;
+        int r = 1000000000;
         while(l<=r){
             int mid = (l+r) >>> 1;
             if(find(mid))
