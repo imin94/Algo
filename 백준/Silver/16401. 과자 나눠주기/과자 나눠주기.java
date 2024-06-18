@@ -21,10 +21,9 @@ public class Main {
         st = new StringTokenizer(br.readLine());
         for(int i = 0; i<m; i++)
             list.add(Integer.parseInt(st.nextToken()));
-        Collections.sort(list);
 
         int l = 1;
-        int r = list.get(m-1);
+        int r = 1000000000;
         while(l<=r){
             int mid = (l+r) >>> 1;
             if(find(mid))
@@ -39,7 +38,7 @@ public class Main {
 
     public static boolean find(int k){
         int cnt = 0;
-        for(int i = list.size()-1; i>=0; i--){
+        for(int i = 0; i<list.size(); i++){
             cnt += list.get(i)/k;
             if(cnt>=n)
                 return true;
