@@ -1,13 +1,12 @@
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.StringTokenizer;
 
 public class Main {
 
     public static int n;
-    public static List<Integer> list = new ArrayList<>();
+    public static int[] list;
 
     public static void main(String[] args) throws IOException {
 
@@ -17,10 +16,11 @@ public class Main {
 
         n = Integer.parseInt(st.nextToken());
         int m = Integer.parseInt(st.nextToken());
-
+        list = new int[m];
+        
         st = new StringTokenizer(br.readLine());
         for(int i = 0; i<m; i++)
-            list.add(Integer.parseInt(st.nextToken()));
+            list[i]=Integer.parseInt(st.nextToken());
 
         int l = 1;
         int r = 1000000000;
@@ -38,8 +38,8 @@ public class Main {
 
     public static boolean find(int k){
         int cnt = 0;
-        for(int i = 0; i<list.size(); i++){
-            cnt += list.get(i)/k;
+        for(int i = 0; i<list.length; i++){
+            cnt += list[i]/k;
             if(cnt>=n)
                 return true;
         }
